@@ -2,15 +2,6 @@
 
 MiMo Code 的全局 skill 集合，遵循 [Anthropic Skills](https://github.com/anthropics/skills) 的 SKILL.md 格式。
 
-## 结构
-
-```
-skills/
-  <skill-name>/
-    SKILL.md     ← 必需：YAML 前言 + Markdown 指令
-    <scripts>/   ← 可选：辅助脚本
-```
-
 ---
 
 ## 工具
@@ -30,7 +21,7 @@ skills/
 | `xlsx` | Excel 表格读写、公式、图表、数据清洗 |
 | `doc-coauthoring` | 结构化文档协同撰写工作流 |
 
-## 思维视角
+## 思维视角 → `perspective/`
 
 | Skill | 人物 |
 |-------|------|
