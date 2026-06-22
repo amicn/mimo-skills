@@ -11,6 +11,9 @@ __pycache__/
 # Node
 node_modules/
 
+# Secrets
+.token
+
 # IDE
 .vscode/
 .idea/
