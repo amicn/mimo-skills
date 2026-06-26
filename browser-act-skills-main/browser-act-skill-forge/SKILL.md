@@ -69,10 +69,3 @@ output/{skill-name}/{site-slug}-{capability-slug}/
     └── {feature-name}.py
 ```
 
-## Experience Notes
-
-Path: `{working-directory}/browser-act-skill-forge-memories/forge.memory.md`
-
-**Before execution**: If the file exists, read it first.
-
-**After execution**: Append unexpected situations and conclusions.

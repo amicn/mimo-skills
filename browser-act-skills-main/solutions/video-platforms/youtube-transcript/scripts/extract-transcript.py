@@ -1,82 +1,68 @@
-import argparse
 import sys
-
-def main():
-    sys.stdout.reconfigure(encoding='utf-8', newline='\n')
-    parser = argparse.ArgumentParser(description='Extract YouTube transcript segments')
-    args = parser.parse_args()
-
-    js = r"""
-    (function() {
-      try {
-        const segments = [];
-        
-        // Try multiple selectors for transcript segments
-        const selectors = [
-          'div[role="button"][tabindex="0"] yt-formatted-string',
-          'div.segment yt-formatted-string',
-          'ytd-transcript-segment-renderer .segment-text',
-          'ytd-transcript-segment-renderer yt-formatted-string',
-          '.segment-text',
-          '[class*="segment"] [class*="text"]'
-        ];
-        
-        let foundSegments = [];
-        for (const sel of selectors) {
-          const els = document.querySelectorAll(sel);
-          if (els.length > 0) {
-            foundSegments = Array.from(els);
-            break;
-          }
-        }
-        
-        // Alternative: look for transcript renderer
-        const transcriptRenderer = document.querySelector('ytd-transcript-renderer');
-        if (transcriptRenderer) {
-          const items = transcriptRenderer.querySelectorAll('ytd-transcript-segment-renderer');
-          items.forEach((item, i) => {
-            const textEl = item.querySelector('.segment-text, yt-formatted-string');
-            const timeEl = item.querySelector('.segment-timestamp, .time-container');
-            segments.push({
-              segment_index: i,
-              text: textEl ? textEl.textContent.trim() : '',
-              timestamp: timeEl ? timeEl.textContent.trim() : ''
-            });
-          });
-        }
-        
-        // Fallback: try to get from ytInitialPlayerResponse
-        if (segments.length === 0 && window.ytInitialPlayerResponse) {
-          const captions = window.ytInitialPlayerResponse?.captions?.playerCaptionsTracklistRenderer;
-          if (captions) {
-            // Transcript not loaded yet - need to open panel
-            return JSON.stringify({ 
-              error: false, 
-              message: 'Transcript panel not yet opened',
-              available_captions: (captions.captionTracks || []).map(t => ({
-                language: t.name?.simpleText || t.languageCode,
-                languageCode: t.languageCode,
-                vssId: t.vssId
-              }))
-            });
-          }
-        }
-        
-        if (segments.length === 0) {
-          return JSON.stringify({ error: true, message: 'No transcript segments found. The transcript panel may not be open.' });
-        }
-        
-        return JSON.stringify({ 
-          segments: segments,
-          total_segments: segments.length,
-          full_text: segments.map(s => s.text).join(' ')
-        }, null, 2);
-      } catch(e) {
-        return JSON.stringify({ error: true, message: e.message });
+sys.stdout.reconfigure(encoding='utf-8', newline='\n')
+print(r"""
+(function() {
+  try {
+    const segments = [];
+    
+    const selectors = [
+      'div[role="button"][tabindex="0"] yt-formatted-string',
+      'div.segment yt-formatted-string',
+      'ytd-transcript-segment-renderer .segment-text',
+      'ytd-transcript-segment-renderer yt-formatted-string',
+      '.segment-text',
+      '[class*="segment"] [class*="text"]'
+    ];
+    
+    let foundSegments = [];
+    for (const sel of selectors) {
+      const els = document.querySelectorAll(sel);
+      if (els.length > 0) {
+        foundSegments = Array.from(els);
+        break;
       }
-    })()
-    """
-    print(js)
-
-if __name__ == '__main__':
-    main()
+    }
+    
+    const transcriptRenderer = document.querySelector('ytd-transcript-renderer');
+    if (transcriptRenderer) {
+      const items = transcriptRenderer.querySelectorAll('ytd-transcript-segment-renderer');
+      items.forEach((item, i) => {
+        const textEl = item.querySelector('.segment-text, yt-formatted-string');
+        const timeEl = item.querySelector('.segment-timestamp, .time-container');
+        segments.push({
+          segment_index: i,
+          text: textEl ? textEl.textContent.trim() : '',
+          timestamp: timeEl ? timeEl.textContent.trim() : ''
+        });
+      });
+    }
+    
+    if (segments.length === 0 && window.ytInitialPlayerResponse) {
+      const captions = window.ytInitialPlayerResponse?.captions?.playerCaptionsTracklistRenderer;
+      if (captions) {
+        return JSON.stringify({ 
+          error: false, 
+          message: 'Transcript panel not yet opened',
+          available_captions: (captions.captionTracks || []).map(t => ({
+            language: t.name?.simpleText || t.languageCode,
+            languageCode: t.languageCode,
+            vssId: t.vssId
+          }))
+        });
+      }
+    }
+    
+    if (segments.length === 0) {
+      return JSON.stringify({ error: true, message: 'No transcript segments found. The transcript panel may not be open.' });
+    }
+    
+    return JSON.stringify({ 
+      segments: segments,
+      total_segments: segments.length,
+      full_text: segments.map(s => s.text).join(' ')
+    }, null, 2);
+  } catch(e) {
+    return JSON.stringify({ error: true, message: e.message });
+  }
+})()
+""")

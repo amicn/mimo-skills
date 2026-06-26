@@ -152,45 +152,18 @@ class MyApp extends StatelessWidget {
 ### Bottom Navigation with StatefulShellRoute
 
 ```dart
-final GoRouter _router = GoRouter(
-  initialLocation: '/home',
-  routes: [
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) =>
-          ScaffoldWithNavBar(navigationShell: navigationShell),
-      branches: [
-        StatefulShellBranch(routes: [
-          GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(path: '/settings', builder: (context, state) => const SettingsScreen()),
-        ]),
-      ],
-    ),
+StatefulShellRoute.indexedStack(
+  builder: (context, state, navigationShell) =>
+      ScaffoldWithNavBar(navigationShell: navigationShell),
+  branches: [
+    StatefulShellBranch(routes: [
+      GoRoute(path: '/home', builder: (ctx, state) => const HomeScreen()),
+    ]),
+    StatefulShellBranch(routes: [
+      GoRoute(path: '/settings', builder: (ctx, state) => const SettingsScreen()),
+    ]),
   ],
 );
-
-// Shell widget with bottom nav
-class ScaffoldWithNavBar extends StatelessWidget {
-  const ScaffoldWithNavBar({required this.navigationShell, super.key});
-  final StatefulNavigationShell navigationShell;
-
-  void _goBranch(int index) => navigationShell.goBranch(index,
-      initialLocation: index == navigationShell.currentIndex);
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    body: navigationShell,
-    bottomNavigationBar: NavigationBar(
-      selectedIndex: navigationShell.currentIndex,
-      onDestinationSelected: _goBranch,
-      destinations: const [
-        NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-        NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
-      ],
-    ),
-  );
-}
 ```
 
 ### Navigation Commands
@@ -509,29 +482,10 @@ mkdir -p integration_test
 
 ## PWA + Flutter Web
 
-For Flutter web builds targeting mobile:
-
-```bash
-flutter build web --web-renderer canvaskit  # Best for PWA quality
-```
-
-Configure the web manifest at `web/manifest.json` and register a service worker. See the `mobile-pwa-design` skill for PWA-specific patterns (manifest, service worker, offline, app shell, iOS meta tags).
+See the `mobile-pwa-design` skill for PWA-specific patterns (manifest, service worker, offline, app shell, iOS meta tags).
 
 ## Testing Checklist
 
-- [ ] `flutter analyze` — no warnings or errors
 - [ ] `flutter test` — all unit/widget tests pass
 - [ ] `flutter test integration_test/` — all integration tests pass
-- [ ] Run on real device or emulator — verify UI renders correctly
-- [ ] Test on multiple screen sizes (phone + tablet)
-- [ ] Test dark mode
-- [ ] Test with slow network (DevTools network throttling)
 
-## Experience Notes
-
-Path: `{working-directory}/flutter-dev-memories/flutter-dev.memory.md`
-
-**Before execution**: If the file exists, read it first.
-
-**After execution**: If unexpected situation encountered or better pattern discovered, append:
-`{YYYY-MM-DD}: {what happened} → {conclusion}`

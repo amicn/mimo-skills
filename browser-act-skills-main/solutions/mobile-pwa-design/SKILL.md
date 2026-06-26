@@ -15,36 +15,7 @@ Mobile PWAs sit at the intersection of **website** and **native app**. The best 
 2. **Touch-first** — 48px+ tap targets, swipe actions, pull-to-refresh, overscroll
 3. **Offline-resilient** — skeleton screens, cached shells, graceful degradation
 
-## Reference: Top ThemeForest Mobile Templates
-
-| Template | Style | Best For | Key Features |
-|----------|-------|----------|-------------|
-| **AppKit** (by Enabled) | Clean, iOS-inspired | Multi-purpose apps | 2.3K sales, 4.99★ — the gold standard |
-| **Sticky Mobile** (by Enabled) | Sticky header/footer | Content apps | 5.5K sales, 4.98★ — bottom nav pattern |
-| **Mobilize** (by BeantownThemes) | Lightweight, flat | Touch-optimized sites | 3.5K sales — OG mobile template |
-| **Appeca** (by Enabled) | Polished, card-based | Social/app UIs | 654 sales, 5.0★ — PWA ready |
-| **Finapp** (by Bragher) | Dark/light, financial | Fintech/banking | 2K sales, 5.0★ — wallet UI |
-| **Cartly** (by createuiux) | Tailwind CSS + PWA | eCommerce/Live Shopping | Latest gen, Tailwind |
-| **PayQra** (by themesflat) | E-Wallet theme | Fintech/PWA | 21 sales, modern PWA |
-| **MarketPro** (by wowtheme7) | Tailwind + Figma | eCommerce/PWA | 5 sales, has Figma |
-| **DineHub** (by George_Fx) | Nuxt JS | Food delivery | New release |
-| **Yummer** (by George_Fx) | Vue 3 | Food/Restaurant | Vue 3 + PWA |
-| **Kolor Mobile** (by Enabled) | Colorful, vibrant | Creative/brand apps | 594 sales, 5.0★ |
-| **Go Mobile** (by BeantownThemes) | Lightweight, fast | General mobile | 3.5K sales, versatile |
-
 ## Tech Stack Patterns
-
-From the ThemeForest ecosystem, the dominant stacks are:
-
-```
-Bootstrap 5 HTML (classic) ──── Mobilize, Go Mobile, Sticky
-         │
-         ├── Tailwind CSS ────── Cartly, MarketPro, EasyPay
-         │
-         ├── Vue 3 ───────────── Yummer, StepHub
-         │
-         └── Nuxt JS ─────────── DineHub, Suha (PWA-ready)
-```
 
 **Recommended default stack**: Tailwind CSS + vanilla JS + service worker (zero framework lock-in, PWA-capable, fast)
 
@@ -146,19 +117,19 @@ Register: `if ('serviceWorker' in navigator) navigator.serviceWorker.register('/
     <!-- Bottom Tab Navigation (the AppKit/Sticky pattern) -->
     <nav class="bottom-nav bg-white border-t border-gray-200 flex justify-around items-center h-16 safe-bottom">
       <button class="flex flex-col items-center text-indigo-500" data-tab="home">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <!-- SVG icon -->
         <span class="text-xs mt-0.5">Home</span>
       </button>
       <button class="flex flex-col items-center text-gray-400" data-tab="search">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <!-- SVG icon -->
         <span class="text-xs mt-0.5">Search</span>
       </button>
       <button class="flex flex-col items-center text-gray-400" data-tab="cart">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM5.22 4.22L7.76 9h9.48l2.76-5.22L5.22 4.22z"/></svg>
+        <!-- SVG icon -->
         <span class="text-xs mt-0.5">Cart</span>
       </button>
       <button class="flex flex-col items-center text-gray-400" data-tab="profile">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <!-- SVG icon -->
         <span class="text-xs mt-0.5">Profile</span>
       </button>
     </nav>
@@ -205,20 +176,7 @@ Show shimmering gray placeholders while data loads, then cross-fade to real cont
 ```
 With Tailwind: `dark:` variants for all colors.
 
-### Swipeable Cards (Cartly/MarketPro pattern)
-```javascript
-let startX, currentX;
-element.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-element.addEventListener('touchmove', e => {
-  currentX = e.touches[0].clientX;
-  const diff = currentX - startX;
-  element.style.transform = `translateX(${diff}px) rotate(${diff * 0.05}deg)`;
-});
-element.addEventListener('touchend', () => {
-  if (currentX - startX > 100) swipeAway('right');
-  else element.style.transform = '';
-});
-```
+
 
 ## Responsive Breakpoints for Mobile-First
 
@@ -244,50 +202,10 @@ For PWA apps, cap at 430px (iPhone 16 Pro Max width) for app-like feel on tablet
 .app-shell { max-width: 430px; margin: 0 auto; }
 ```
 
-## Testing PWA Readiness
-
-```bash
-# Check manifest
-curl -s https://your-site.com/manifest.json | python3 -m json.tool
-
-# Audit with Lighthouse (via Playwright)
-npx -y playwright@latest open --save-content ~/Desktop/lighthouse.txt https://your-site.com
-
-# Check service worker is registered
-# In browser console: navigator.serviceWorker.controller
-```
-
 ## Checklist: Shipping a Production PWA
 
-- [ ] Manifest.json with all icons (192, 512, maskable)
-- [ ] Service worker with app shell caching
-- [ ] Offline fallback page
-- [ ] iOS meta tags + apple-touch-icon
-- [ ] 48px minimum touch targets
-- [ ] Viewport-fit=cover for notched phones
-- [ ] Safe area insets (env(safe-area-inset-*))
-- [ ] Status bar color (theme-color meta)
 - [ ] Smooth page transitions (view transitions API or CSS)
-- [ ] Skeleton screens for async content
-- [ ] Dark mode support
 - [ ] Tested on real devices (Chrome DevTools device mode)
 - [ ] Lighthouse PWA badge passing (score ≥ 90)
-- [ ] HTTPS (required for service workers)
 
-## Design Inspiration Sources
 
-Browse 400+ live previews on ThemeForest for visual reference:
-```
-https://themeforest.net/category/site-templates/mobile?sort=sales     # Best sellers
-https://themeforest.net/category/site-templates/mobile?sort=rating    # Top rated
-https://themeforest.net/category/site-templates/mobile?sort=date      # Newest
-```
-
-## Experience Notes
-
-Path: `{working-directory}/mobile-pwa-design-memories/mobile-pwa-design.memory.md`
-
-**Before execution**: If the file exists, read it first.
-
-**After execution**: If unexpected situation encountered or better pattern discovered, append:
-`{YYYY-MM-DD}: {what happened} → {conclusion}`

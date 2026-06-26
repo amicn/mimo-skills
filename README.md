@@ -2,7 +2,7 @@
 
 MiMo Code 的全局 skill 集合，遵循 [Anthropic Skills](https://github.com/anthropics/skills) 的 SKILL.md 格式。
 
-> 自动生成于 2026-06-26 16:01:53
+> 自动生成于 2026-06-26 16:38:35
 
 ---
 
@@ -30,6 +30,23 @@ MiMo Code 的全局 skill 集合，遵循 [Anthropic Skills](https://github.com/
 | Skill | 说明 |
 |-------|------|
 | `autocad-dwg-redraw` | Rebuild and validate AutoCAD drawings from a source DWG, a PDF-derive... |
+
+## 浏览器/搜索工具
+
+| Skill | 说明 |
+|-------|------|
+| `ai-video-cinema` | Cinematic AI video production with Google Veo 3.1, FFmpeg compositing... |
+| `ai-video-generation` | AI video generation using 100+ t2v/i2v/lipsync models via Muapi API a... |
+| `ai-video-production` | Full AI video production pipeline — voiceover TTS, music generation, ... |
+| `browser-act` | Browser automation CLI for AI agents — navigation, interaction, data ... |
+| `browser-act-skill-forge` | Forges reusable Skill packages (SKILL.md + scripts) from website expl... |
+| `flutter-dev` | Full-stack Flutter app development — architecture, UI, state, routing... |
+| `google-search-serp` | Extracts Google Search results page (SERP) data including organic res... |
+| `mobile-pwa-design` | Design and build modern Progressive Web App frontends and mobile-firs... |
+| `tiktok-contents` | TikTok content creation with Symphony Creative Studio, Dreamina Seeda... |
+| `web-page-marker` | Extracts complete readable Markdown content from any web page. Use wh... |
+| `youtube-search` | Extracts structured data from YouTube search results — videos, shorts... |
+| `youtube-transcript` | Extracts full transcripts from YouTube videos — with or without times... |
 
 ## 思维视角
 

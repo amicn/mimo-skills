@@ -41,19 +41,6 @@ eval "$(python scripts/extract-transcript.py)"
 
 This script extracts all visible transcript segments with timestamps.
 
-### DOM: Get Available Languages
-
-```
-eval "$(python scripts/get-languages.py)"
-```
-
-Returns available transcript language options.
-
-### DOM: Open Transcript Panel
-
-```
-eval "$(python scripts/open-transcript-panel.py)"
-```
 
 ## Data Output
 

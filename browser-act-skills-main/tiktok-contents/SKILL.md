@@ -217,58 +217,10 @@ Creator marketplace and collaboration platform.
 8. Optimize with Symphony Automation during delivery
 ```
 
-## 7. Integration with AI Video Generation Models
-
-TikTok content can be enhanced by connecting to the broader AI video generation ecosystem:
-
-### Supported Models for TikTok Content
-
-| Model | Best For | Endpoint |
-|-------|----------|----------|
-| Dreamina Seedance 2.0 | Cinematic TikTok ads | Via Creative Studio |
-| Kling 3.0 Pro | High-quality hero videos | `kling-v3.0-pro-t2v` |
-| Veo 3.1 | Cinematic 1080p content | `veo3-t2v` |
-| Wan 2.6 | Fast, good quality | `wan2.6-t2v` |
-| Hailuo 2.3 | Social media optimization | `hailuo-2.3-pro-t2v` |
-| Runway Gen-3 | Creative, artistic content | `runway-gen3-t2v` |
-| Seedance Lite | Quick iteration | `seedance-lite-t2v` |
-
-### Aspect Ratios for TikTok
-
-```
-9:16 → Full-screen TikTok vertical (primary)
-1:1  → Square format (feed)
-16:9 → Landscape (stories, duets)
-```
-
-## Quick Reference
-
-### URLs
-
-| Platform | URL |
-|----------|-----|
-| Creative Studio Home | `https://ads.tiktok.com/creative/creativestudio/home` |
-| Generate Videos | `https://ads.tiktok.com/creative/creativestudio/generate` |
-| Avatar Videos | `https://ads.tiktok.com/creative/creativestudio/avatar` |
-| Scripts | `https://ads.tiktok.com/creative/creativestudio/script` |
-| Dubbing | `https://ads.tiktok.com/creative/creativestudio/dubbing` |
-| Video Editor | `https://ads.tiktok.com/creative/creativestudio/edit` |
-| Creative Center | `https://ads.tiktok.com/business/creativecenter/pc/en` |
-| Top Ads | `https://ads.tiktok.com/business/creativecenter/inspiration/topads/` |
-| Symphony API | `https://ads.tiktok.com/business/creativecenter/tools/api` |
-
-### Login
+## Login
 
 - URL: `https://ads.tiktok.com/i18n/login`
 - Supports: Email/password, TikTok OAuth, TikTok for Business account
 - Redirects to Creative Studio after login
 - **Security**: enable 2FA/MFA on your TikTok account; use OAuth (not password) when possible
 
-## Experience Notes
-
-Path: `{working-directory}/tiktok-memories/tiktok-contents.memory.md`
-
-**Before execution**: If the file exists, read it first.
-
-**After execution**: If unexpected situation encountered or better pattern discovered, append:
-`{YYYY-MM-DD}: {what happened} → {conclusion}`

@@ -243,11 +243,3 @@ Once finalized, LOCK your media files to prevent accidental edits. Export at hig
 | Video effects / edit | AI Video Effects, V2V Motion Control | Transform existing video |
 | Watermark removal | Video Watermark Remover | Clean up sourced clips |
 
-## Experience Notes
-
-Path: `{working-directory}/video-gen-memories/video-generation.memory.md`
-
-**Before execution**: If the file exists, read it first.
-
-**After execution**: If unexpected situation encountered or better pattern discovered, append:
-`{YYYY-MM-DD}: {what happened} → {conclusion}`
