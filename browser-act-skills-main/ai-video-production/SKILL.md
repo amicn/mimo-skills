@@ -22,6 +22,9 @@ SCRIPT → VOICEOVER → SCENE IMAGES/VIDEOS → MUSIC + SFX → COMPOSITE → T
 pip install elevenlabs python-dotenv
 echo "ELEVENLABS_API_KEY=your_key" >> .env
 echo "ELEVENLABS_VOICE_ID=your_voice_id" >> .env
+# IMPORTANT: add .env to .gitignore immediately; never commit API keys
+echo ".env" >> .gitignore
+# chmod 600 .env on macOS/Linux to restrict file access
 
 # Single file
 python tools/voiceover.py --script VOICEOVER-SCRIPT.md --output public/audio/voiceover.mp3
@@ -165,6 +168,40 @@ python tools/chain_video.py \
   --output-dir output/ --start 5 --end 30
 ```
 
+## Cloud GPU Infrastructure
+
+### Modal (Default)
+
+```bash
+# Setup
+pip install modal
+modal setup
+
+# Env vars
+echo "MODAL_TOKEN_ID=..." >> .env
+echo "MODAL_TOKEN_SECRET=..." >> .env
+
+# Deploy services (one time per service)
+modal deploy docker/modal-ltx2/app.py
+modal deploy docker/modal-qwen3-tts/app.py
+modal deploy docker/modal-flux2/app.py
+
+# Set endpoint URLs
+echo "MODAL_LTX2_ENDPOINT_URL=..." >> .env
+echo "MODAL_QWEN3_TTS_ENDPOINT_URL=..." >> .env
+```
+
+### RunPod (Alternative)
+
+```bash
+echo "RUNPOD_API_KEY=..." >> .env
+
+# Setup per tool
+python tools/music_gen.py --setup          # ACE-Step endpoint
+python tools/qwen3_tts.py --setup          # Qwen3-TTS endpoint
+python tools/sadtalker.py --setup          # SadTalker endpoint
+```
+
 ## Talking Head (SadTalker)
 
 Generate narrated talking head video from a portrait image + voiceover audio:
@@ -258,6 +295,52 @@ npx remotion studio
 | `NarratorPiP` | Picture-in-picture presenter (works with SadTalker) |
 | `FilmGrain` | SVG noise overlay for film texture |
 
-## Full Production Pipeline
+## Brand Management
 
-Voiceover → timing sync → music → Remotion compositing → render → audio mix → upscale.
+```bash
+# Structure
+brands/<name>/
+├── brand.json    # Colors, fonts, personality, style
+├── voice.json    # Voice ID for ElevenLabs or Qwen3 clone config
+└── assets/       # Logos, images
+
+# Use in music generation
+python tools/music_gen.py --preset upbeat-tech --brand digital-samba --output bg.mp3
+```
+
+## Full Production Pipeline Example
+
+```bash
+# 1. Generate voiceover (per-scene)
+python tools/voiceover.py --scene-dir projects/myvideo/public/audio/scenes/ --json
+
+# 2. Sync timing
+python tools/sync_timing.py --apply
+
+# 3. Generate background music
+python tools/music_gen.py --preset corporate-bg --duration 120 --output projects/myvideo/public/audio/bg.mp3
+
+# 4. Render video (Remotion)
+cd projects/myvideo && npx remotion render
+
+# 5. Add music and audio mixing
+python tools/addmusic.py \
+  --input output/video.mp4 \
+  --music public/audio/bg.mp3 \
+  --music-volume -18 \
+  --voiceover public/audio/voiceover.mp3 \
+  --voiceover-volume -6 \
+  --output final.mp4
+
+# 6. (Optional) Upscale
+python tools/upscale.py --input final.mp4 --output final_4k.mp4 --scale 4
+```
+
+## Experience Notes
+
+Path: `{working-directory}/video-prod-memories/video-production.memory.md`
+
+**Before execution**: If the file exists, read it first.
+
+**After execution**: If unexpected situation encountered or better pattern discovered, append:
+`{YYYY-MM-DD}: {what happened} → {conclusion}`

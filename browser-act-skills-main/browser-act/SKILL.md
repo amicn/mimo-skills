@@ -91,3 +91,11 @@ browser-act get-skills advanced                        # When core isn't enough
 browser-act get-skills main                            # Latest SKILL.md for self-update
 ```
 
+## Experience Notes
+
+Path: `{working-directory}/browser-act-memories/browser-act.memory.md`
+
+**Before execution**: If the file exists, read it first.
+
+**After execution**: If unexpected situation encountered (strategy became ineffective, better path discovered), append:
+`{YYYY-MM-DD}: {what happened} → {conclusion}`

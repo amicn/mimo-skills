@@ -24,6 +24,35 @@ Cinematic AI video production using Google Veo 3.1, FFmpeg-based tools, and the 
 
 ## Veo 3.1 Cinematic Video Generation
 
+### The 5-Part Formula
+
+Every Veo video prompt should combine five elements:
+
+```
+[CINEMATOGRAPHY] + [SUBJECT] + [ACTION] + [CONTEXT] + [STYLE]
+```
+
+**Examples:**
+
+| Level | Prompt |
+|-------|--------|
+| Basic | "A cat playing with a ball of yarn" |
+| Good | "Close-up of a ginger cat batting a red yarn ball on a hardwood floor, warm afternoon light" |
+| Cinematic | "Low-angle close-up tracking shot of a ginger cat playfully batting a red yarn ball on a polished hardwood floor, golden afternoon sunlight streaming through a window creating long shadows, soft fur texture, shallow depth of field, vintage 16mm film grain" |
+
+### Cinematography Vocabulary
+
+| Shot Type | Description | Best For |
+|-----------|-------------|----------|
+| High-angle long shot | Camera above, full body visible | Establishing scenes |
+| Low-angle tracking shot | Camera below, moving with subject | Power, drama |
+| Over-the-shoulder | Behind a character looking at subject | Dialogue, POV |
+| Extreme close-up | Single detail fills frame | Emotion, intensity |
+| Dutch angle | Tilted horizon | Tension, unease |
+| Crane shot | Vertical camera movement | Grand reveals |
+| POV | Through character's eyes | Immersion |
+| Drone shot | Aerial, sweeping | Landscapes, scale |
+
 ### Soundstage Direction (Veo 3+)
 
 For Veo 3 models, use quotation marks for specific dialogue and brackets for audio:
@@ -113,3 +142,11 @@ When adding soundtrack or voiceover to video:
 9. EXPORT: Output as H.264 .mp4
 ```
 
+## Experience Notes
+
+Path: `{working-directory}/video-cinema-memories/video-cinema.memory.md`
+
+**Before execution**: If the file exists, read it first.
+
+**After execution**: If unexpected situation encountered or better pattern discovered, append:
+`{YYYY-MM-DD}: {what happened} → {conclusion}`
